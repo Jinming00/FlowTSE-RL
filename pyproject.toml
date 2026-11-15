@@ -1,0 +1,35 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "flowtse-rl"
+version = "0.1.0"
+description = "Conditional mel flow matching with a UDiT backbone and frozen BigVGAN"
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = [
+  "torch>=2.2", "torchaudio>=2.2", "einops>=0.6", "numpy>=1.24",
+  "PyYAML>=6", "soundfile>=0.12", "librosa>=0.10", "matplotlib>=3.5", "huggingface_hub>=0.23",
+  "accelerate>=0.20.3,<2", "tqdm>=4.66",
+]
+
+[project.optional-dependencies]
+eval = ["pesq>=0.0.4", "pystoi>=0.4.1"]
+test = ["pytest>=8"]
+logging = ["wandb>=0.15"]
+scoring = ["pesq>=0.0.4", "pystoi>=0.4.1", "onnxruntime>=1.17", "jiwer>=4,<5", "whisper-normalizer==0.1.15", "transformers==4.57.6"]
+scoring-gpu = ["pesq>=0.0.4", "pystoi>=0.4.1", "onnxruntime-gpu>=1.17", "jiwer>=4,<5", "whisper-normalizer==0.1.15", "transformers==4.57.6"]
+scoring-asr = ["qwen-asr==0.0.6"]
+
+[tool.setuptools]
+license-files = ["LICENSE", "licenses/*.txt"]
+
+[tool.setuptools.packages.find]
+include = ["flowtse_rl*"]
+
+[tool.setuptools.package-data]
+"flowtse_rl.vendor.bigvgan" = ["LICENSE", "incl_licenses/*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
